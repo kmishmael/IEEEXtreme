@@ -22,21 +22,27 @@ export default defineConfig({
 					},
 					{
 						label: 'How It Works', slug: 'start/how-it-works'
+					},
+					{
+						label: 'How to Participate', slug: 'start/registration'
 					}
 				]
 			},
-			{
-				label: 'Guides',
-				items: [
-					// Each item here is one entry in the navigation menu.
-					{ label: 'Example Guide', slug: 'guides/example' },
-				],
-			},
-			{
-				label: 'Reference',
-				autogenerate: { directory: 'reference' },
-			},
+			// {
+			// 	label: 'Guides',
+			// 	items: [
+			// 		// Each item here is one entry in the navigation menu.
+			// 		{ label: 'Example Guide', slug: 'guides/example' },
+			// 	],
+			// },
+			// {
+			// 	label: 'Reference',
+			// 	autogenerate: { directory: 'reference' },
+			// },
 		],
+		components: {
+			Head: './src/components/Head.astro',
+		}
 	}), tailwind({
 		applyBaseStyles: false,
 	})],
