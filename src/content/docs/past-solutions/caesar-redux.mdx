@@ -1,0 +1,161 @@
+---
+title: Ceasar Redux
+---
+
+# Caesar Redux
+
+#### IEEEXtreme 17.0, [view on CSAcademy](https://csacademy.com/ieeextreme17/task/caesar_redux/statement/)
+
+## Problem
+We will walk through the process of solving a programming problem called "Caesar Redux." The problem involves implementing the Caesar cipher encryption technique to either encrypt or decrypt a given message based on specific conditions. We'll start by brainstorming how to approach the problem, what data structures we will use, and follow it with the code solution and its explanation.
+
+## Problem Overview
+
+The problem revolves around the classic Caesar cipher, which shifts the letters in a message by a given number of positions (shift). The input can either be plaintext (unencrypted message) or ciphertext (encrypted message). Our job is to determine the type of message and either encrypt it or decrypt it accordingly.
+
+### Key Details:
+
+- If the input message contains the word `"the"`, it's considered plaintext, and we should encrypt it.
+- Otherwise, it's ciphertext, and we should decrypt it.
+- Spaces are not affected by encryption or decryption.
+- Each message will consist of lowercase letters and spaces.
+
+### Constraints:
+
+- \(1 \leq n \leq 25\), where \(n\) is the number of messages.
+- The shift value will be between 1 and 25, inclusive.
+- Each message will contain between 3 and 300 characters.
+
+## Approach
+
+### Step 1: Plan
+
+1. **Input Parsing**: First, we need to handle multiple messages. The input starts with an integer \(n\), which indicates the number of message-shift pairs. We will then process 2 lines for each message: the shift value and the message itself.
+
+2. **Determine if the Message is Plaintext or Ciphertext**: A message is considered plaintext if it contains the word "the". If not, it's ciphertext. Based on this determination, we will either encrypt or decrypt the message.
+3. **Encryption and Decryption**: The Caesar cipher works by shifting letters:
+   - **Encryption**: Shift the characters forward by a certain number of positions.
+   - **Decryption**: Shift the characters backward by the same number of positions.
+
+### Step 2: Data Structures
+
+1. **Strings**: We will manipulate the input message string character by character. We need to check if each character is a letter and adjust its position in the alphabet based on the shift.
+2. **Looping Constructs**: We'll use loops to process the input and go through each character in the string.
+
+### Step 3: Encryption and Decryption Logic
+
+For encryption, we will:
+
+- Shift each letter backward by the given shift value to simulate encryption.
+- Handle wrapping around the alphabet using modular arithmetic.
+
+For decryption, we:
+
+- Shift each letter forward by the same shift value to reverse the encryption process.
+
+## Code Solution
+
+```python wrap title="main.py"
+
+def caesar_cipher_encrypt(ciphertext, shift):  # ciphertext is the text to be encrypted, shift is the number of letters to shift by
+    encrypted_text = ""
+
+    for char in ciphertext:  # iterate through each character in the ciphertext
+        if char.isalpha():  # if the character is a letter
+            is_upper = char.isupper()  # check if the character is uppercase
+            char = char.lower()  # convert the character to lowercase
+            encrypted_char = chr(((ord(char) - ord('a') - shift) % 26) + ord('a'))  # shift the character backward
+            if is_upper:
+                encrypted_char = encrypted_char.lower()  # maintain lowercase in this scenario
+            encrypted_text += encrypted_char  # append the shifted character to the encrypted text
+        else:
+            encrypted_text += char  # if not a letter, keep the character as is
+
+    return encrypted_text
+
+def caesar_cipher_decrypt(plaintext, shift):  # plaintext is the text to be decrypted, shift is the number of letters to shift by
+    decrypted_text = ""
+
+    for char in plaintext:  # iterate through each character in the plaintext
+        if char.isalpha():  # if the character is a letter
+            is_upper = char.isupper()  # check if the character is uppercase
+            char = char.lower()  # convert the character to lowercase
+            decrypted_char = chr(((ord(char) - ord('a') + shift) % 26) + ord('a'))  # shift the character forward
+            if is_upper:
+                decrypted_char = decrypted_char.lower()  # maintain lowercase in this scenario
+            decrypted_text += decrypted_char  # append the shifted character to the decrypted text
+        else:
+            decrypted_text += char  # if not a letter, keep the character as is
+
+    return decrypted_text
+
+# Read the number of messages
+num_msgs = int(input())
+
+# Ensure the number of messages is within the allowed range
+if 1 <= num_msgs <= 25:
+
+    # Iterate through each message-shift pair
+    for i in range(num_msgs):
+        # Read the shift value
+        shift = int(input())
+        if 1 <= shift <= 25:
+            # Read the text message (either plaintext or ciphertext)
+            text = input()
+            if 1 <= len(list(text)) <= 300:
+
+                # Check if the message contains the word "the"
+                if ' the ' in text:
+                    encrypted_text = caesar_cipher_encrypt(text, shift)
+                    print(encrypted_text)
+
+                else:
+                    decrypted_text = caesar_cipher_decrypt(text, shift)
+                    print(decrypted_text)
+```
+
+## Explanation
+
+1. **Function `caesar_cipher_encrypt(ciphertext, shift)`**:
+
+   - This function takes the input ciphertext and shifts each character backward by the specified shift value to produce the encrypted message.
+   - We loop through each character in the input text, checking if it's a letter, and adjust its position in the alphabet using modular arithmetic to handle wrapping around from `'z'` to `'a'`.
+   - Non-letter characters, such as spaces, remain unchanged.
+
+2. **Function `caesar_cipher_decrypt(plaintext, shift)`**:
+
+   - This function reverses the Caesar cipher by shifting the characters forward by the shift value, effectively decrypting the message.
+   - Like the encryption function, it processes each letter individually and leaves spaces unchanged.
+
+3. **Main Program**:
+   - First, we read the number of message-shift pairs.
+   - For each pair, we read the shift value and message, and determine whether the message is plaintext or ciphertext by checking for the presence of the word "the".
+   - Based on this check, we either encrypt or decrypt the message and print the result.
+
+### Input/Output Example:
+
+**Input**:
+
+```
+2
+19
+we accept the ieeextreme challenge
+19
+qbspbz jhlzhy olsk aol vmmpjl vm wvuapmle theptbz wypvy av iljvtpun kpjahavy
+```
+
+**Output**:
+
+```
+dl hjjlwa aol pllleayltl johsslunl
+julius caesar held the office of pontifex maximus prior to becoming dictator
+```
+
+### Explanation:
+
+- The first message contains the word `"the"`, so it's considered plaintext, and we encrypt it using a backward shift of 19.
+- The second message does not contain the word `"the"`, so it's considered ciphertext, and we decrypt it using the same shift of 19 to recover the original plaintext.
+
+---
+
+This solution efficiently handles both encryption and decryption with a time complexity of \(O(m)\), where \(m\) is the number of characters in the message. Given the constraints, this solution will run within the allowed time limits.

@@ -28,6 +28,22 @@ export default defineConfig({
 					}
 				]
 			},
+			{
+				label: 'Data Structures and Algorithms',
+				items: [
+					{
+						label: 'Introduction', slug: 'data-structures/introduction'
+					},
+				]
+			},
+			{
+				label: 'Past solutions',
+				items: [
+					{
+						label: 'Caesar', slug: 'past-solutions/caesar-redux'
+					},
+				]
+			}
 			// {
 			// 	label: 'Guides',
 			// 	items: [
