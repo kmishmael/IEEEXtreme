@@ -9,7 +9,7 @@ export default defineConfig({
 	integrations: [starlight({
 		title: 'IEEEXtreme UON',
 		social: {
-			github: 'https://github.com/kmishmael/ieeextreme',
+			github: 'https://github.com/kmishmael/IEEEXtreme',
 		},
 		customCss: ['./src/tailwind.css',
 		],
