@@ -4,10 +4,67 @@ title: Ceasar Redux
 
 # Caesar Redux
 
-#### IEEEXtreme 17.0, [view on CSAcademy](https://csacademy.com/ieeextreme17/task/caesar_redux/statement/)
+###### From IEEEXtreme 17.0 (2023), <a href="/https://csacademy.com/ieeextreme17/task/caesar_redux/statement/" target="_blank">view on CSAcademy</a>
 
-## Problem
-We will walk through the process of solving a programming problem called "Caesar Redux." The problem involves implementing the Caesar cipher encryption technique to either encrypt or decrypt a given message based on specific conditions. We'll start by brainstorming how to approach the problem, what data structures we will use, and follow it with the code solution and its explanation.
+# Problem Statement
+
+![](/XtremeLogo17.svg)
+
+#### Caesar Redux
+
+Time limit:
+
+- 2500 ms (Python 3)
+- 1000ms (C)
+- 1280ms (JavaScript)
+
+Memory limit: 256 MB
+
+The Caesar cipher is a simple encryption technique that was used by Julius Caesar to send secret messages to his allies. It works by shifting the letters in the plaintext message by a certain number of positions. Decryption is performed by shifting in the opposite direction by the same number of positions.
+
+A program that implements this technique is needed to encrypt a plaintext message or decrypt a ciphertext messages. Spaces are not affected by encryption or decryption.
+
+You need to determine whether the value that is provided is plaintext or ciphertext. If the value provided is plaintext, you should output the encrypted message given the shift value above. If the provided value is ciphertext, you should output the decrypted message.
+
+#### Standard Input
+
+Input begins with an integer `n` on a line by itself that indicates how many messages are in the input.
+
+The next `2n` lines contain a line with the shift amount followed by a line with either a plaintext or a ciphertext message.
+
+#### Standard Output
+
+For each message in the input, output the plaintext if the message is ciphertext, or the ciphertext if the message is plaintext.
+
+#### Constraints and notes
+
+- 1≤ n ≤ 25
+- The shift value will be between 1 and 25, inclusive.
+- Each message will consist of lowercase letters and spaces, and contain between 3 and 300 characters.
+- If the message provided contains the word "the", then it is plaintext. Otherwise, it is ciphertext.
+
+#### Example
+
+##### Input
+
+```wrap title="Input"
+2
+19
+we accept the ieeextreme challenge
+19
+qbspbz jhlzhy olsk aol vmmpjl vm wvuapmle theptbz wypvy av iljvtpun kpjahavy
+```
+
+##### Output
+
+```wrap title="Input"
+dl hjjlwa aol pllleayltl johsslunl
+julius caesar held the office of pontifex maximus prior to becoming dictator
+```
+
+## Solution
+
+The problem involves implementing the Caesar cipher encryption technique to either encrypt or decrypt a given message based on specific conditions. We'll start by brainstorming how to approach the problem, what data structures we will use, and follow it with the code solution and its explanation.
 
 ## Problem Overview
 
@@ -22,7 +79,7 @@ The problem revolves around the classic Caesar cipher, which shifts the letters 
 
 ### Constraints:
 
-- \(1 \leq n \leq 25\), where \(n\) is the number of messages.
+- 1≤ n ≤ 25, where `n` is the number of messages.
 - The shift value will be between 1 and 25, inclusive.
 - Each message will contain between 3 and 300 characters.
 
@@ -132,7 +189,7 @@ if 1 <= num_msgs <= 25:
    - For each pair, we read the shift value and message, and determine whether the message is plaintext or ciphertext by checking for the presence of the word "the".
    - Based on this check, we either encrypt or decrypt the message and print the result.
 
-### Input/Output Example:
+### Input/Output Match check:
 
 **Input**:
 
