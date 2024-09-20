@@ -58,7 +58,10 @@ export default defineConfig({
 		],
 		components: {
 			Head: './src/components/Head.astro',
-		}
+		},
+		editLink: {
+			baseUrl: 'https://github.com/kmishmael/IEEEXtreme/edit/main/',
+		  },
 	}), tailwind({
 		applyBaseStyles: false,
 	})],
