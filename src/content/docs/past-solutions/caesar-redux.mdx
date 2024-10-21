@@ -2,7 +2,9 @@
 title: Ceasar Redux
 ---
 
-###### From IEEEXtreme 17.0 (2023), <a href="/https://csacademy.com/ieeextreme17/task/caesar_redux/statement/" target="_blank">view on CSAcademy</a>
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+###### From IEEEXtreme 17.0 (2023), <a href="https://csacademy.com/ieeextreme-practice/task/caesar_redux/" target="_blank">view on CSAcademy</a>
 
 # Problem Statement
 
@@ -110,64 +112,206 @@ For decryption, we:
 
 ## Code Solution
 
-```python wrap title="main.py"
+<Tabs syncKey="xtreme">
+  <TabItem label="Python" icon="seti:python">
+  
+```python wrap
+def parser():
+    """This function is provided. It is used to read the input"""
+    while 1:
+        # end = []
+        data = list(input().split('\n'))
+        for number in data:
+            if len(number) > 0:
+                yield(number)
 
-def caesar_cipher_encrypt(ciphertext, shift):  # ciphertext is the text to be encrypted, shift is the number of letters to shift by
-    encrypted_text = ""
+input_parser = parser()
 
-    for char in ciphertext:  # iterate through each character in the ciphertext
-        if char.isalpha():  # if the character is a letter
-            is_upper = char.isupper()  # check if the character is uppercase
-            char = char.lower()  # convert the character to lowercase
-            encrypted_char = chr(((ord(char) - ord('a') - shift) % 26) + ord('a'))  # shift the character backward
-            if is_upper:
-                encrypted_char = encrypted_char.lower()  # maintain lowercase in this scenario
-            encrypted_text += encrypted_char  # append the shifted character to the encrypted text
-        else:
-            encrypted_text += char  # if not a letter, keep the character as is
+# get_word, get_number functions will be provided to help get the input data
 
-    return encrypted_text
+def get_word():
+global input_parser
+return next(input_parser)
 
-def caesar_cipher_decrypt(plaintext, shift):  # plaintext is the text to be decrypted, shift is the number of letters to shift by
-    decrypted_text = ""
+def get_number():
+data = get_word()
+try:
+return int(data)
+except ValueError:
+return float(data)
 
-    for char in plaintext:  # iterate through each character in the plaintext
-        if char.isalpha():  # if the character is a letter
-            is_upper = char.isupper()  # check if the character is uppercase
-            char = char.lower()  # convert the character to lowercase
-            decrypted_char = chr(((ord(char) - ord('a') + shift) % 26) + ord('a'))  # shift the character forward
-            if is_upper:
-                decrypted_char = decrypted_char.lower()  # maintain lowercase in this scenario
-            decrypted_text += decrypted_char  # append the shifted character to the decrypted text
-        else:
-            decrypted_text += char  # if not a letter, keep the character as is
+def testShift(value):
+try:
+return int(value)
+except ValueError:
+return 101
 
-    return decrypted_text
+testCases = get_number()
 
-# Read the number of messages
-num_msgs = int(input())
+sententeces = []
+shift_list = []
+flags = []
 
-# Ensure the number of messages is within the allowed range
-if 1 <= num_msgs <= 25:
+for i in range(testCases):
+shift_list.append(get_number())
+sententeces.append(get_word())
 
-    # Iterate through each message-shift pair
-    for i in range(num_msgs):
-        # Read the shift value
-        shift = int(input())
-        if 1 <= shift <= 25:
-            # Read the text message (either plaintext or ciphertext)
-            text = input()
-            if 1 <= len(list(text)) <= 300:
+for sentence in sententeces:
+s = sentence.split(' ')
+if 'the' in s:
+flags.append(True)
+else:
+flags.append(False)
 
-                # Check if the message contains the word "the"
-                if ' the ' in text:
-                    encrypted_text = caesar_cipher_encrypt(text, shift)
-                    print(encrypted_text)
+for k in range(len(sententeces)):
+sentence = sententeces[k]
+shift = int(shift_list[k])
+Letter = ''
+if flags[k]:
 
-                else:
-                    decrypted_text = caesar_cipher_decrypt(text, shift)
-                    print(decrypted_text)
-```
+        for character in range(len(sentence)):
+            char = sentence[character]
+
+            char = ord(char)
+
+            if char > 96 and char < 123:
+                char2 = char - shift
+                if char2 < 97:
+                    char2 = char2 + 26
+                char = chr(char2)
+                Letter = Letter + char
+            else:
+                char = chr(char)
+                Letter = Letter + char
+
+    else:
+        for character in range(len(sentence)p):
+            char = sentence[character]
+
+            char = ord(char)
+
+            if char > 96 and char < 123:
+                char2 = char + shift
+                if char2 > 122:
+                    char2 = char2%122+96
+                char = chr(char2)
+                Letter = Letter + char
+            else:
+                char = chr(char)
+                Letter = Letter + char
+    print(Letter)
+
+````
+  </TabItem>
+  <TabItem label="C++" icon="seti:cpp">
+  ```cpp wrap
+  #include <iostream>
+#include <vector>
+#include <sstream>
+#include <string>
+
+using namespace std;
+
+vector<string> input_parser() {
+    vector<string> result;
+    string line;
+    while (getline(cin, line)) {
+        if (!line.empty()) {
+            result.push_back(line);
+        }
+    }
+    return result;
+}
+
+string get_word(vector<string>& input_data, int& current_index) {
+    return input_data[current_index++];
+}
+
+int get_number(vector<string>& input_data, int& current_index) {
+    string data = get_word(input_data, current_index);
+    try {
+        return stoi(data);
+    } catch (invalid_argument&) {
+        return static_cast<int>(stof(data)); // Use float conversion if it's not an int
+    }
+}
+
+int testShift(int value) {
+    try {
+        return value;
+    } catch (...) {
+        return 101;
+    }
+}
+
+int main() {
+    vector<string> data = input_parser(); // read input from the user
+    int current_index = 0;
+
+    int testCases = get_number(data, current_index);
+
+    vector<string> sentences;
+    vector<int> shift_list;
+    vector<bool> flags;
+
+    for (int i = 0; i < testCases; i++) {
+        shift_list.push_back(get_number(data, current_index));
+        sentences.push_back(get_word(data, current_index));
+    }
+
+    for (const string& sentence : sentences) {
+        istringstream iss(sentence);
+        string word;
+        bool found = false;
+        while (iss >> word) {
+            if (word == "the") {
+                found = true;
+                break;
+            }
+        }
+        flags.push_back(found);
+    }
+
+    for (size_t k = 0; k < sentences.size(); k++) {
+        string sentence = sentences[k];
+        int shift = shift_list[k];
+        string result = "";
+        bool hasThe = flags[k];
+
+        if (hasThe) {
+            for (char ch : sentence) {
+                if (ch >= 'a' && ch <= 'z') {
+                    int char_shifted = ch - shift;
+                    if (char_shifted < 'a') {
+                        char_shifted += 26;
+                    }
+                    result += static_cast<char>(char_shifted);
+                } else {
+                    result += ch;
+                }
+            }
+        } else {
+            for (char ch : sentence) {
+                if (ch >= 'a' && ch <= 'z') {
+                    int char_shifted = ch + shift;
+                    if (char_shifted > 'z') {
+                        char_shifted = char_shifted % 'z' + 'a' - 1;
+                    }
+                    result += static_cast<char>(char_shifted);
+                } else {
+                    result += ch;
+                }
+            }
+        }
+        cout << result << endl;
+    }
+
+    return 0;
+}
+  ```
+  </TabItem>
+</Tabs>
+
 
 ## Explanation
 
